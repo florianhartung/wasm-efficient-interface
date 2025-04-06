@@ -1,5 +1,8 @@
 # Efficient binary data transfer between a host and WebAssembly application: SHA256 PoC
-This uses Wasm component model Resources (which internally use safe externrefs) as handles to files in memory.
+This uses Wasm component model Resources (which internally use safe externrefs) as handles to files in host-memory.
+Wasm applications can then call methods such as `read_byte() -> u8` or `read_max_n_bytes(n) -> list<u8>` on the resource.
+
+This proof of concept uses Wasm to calculate the SHA256 hash of a file provided by the host application.
 
 1. Generate data from inside `./random-file` (by default 4GB):
   ```sh
@@ -17,10 +20,10 @@ This uses Wasm component model Resources (which internally use safe externrefs) 
 
 
 ## Some results on my system
-Rust native: 8.17
-`sha256sum`: 10.49
-Wasm S: 25.65
-Wasm O3: 26.08
+- `sha256sum`: 10.49s
+- Rust native(opt-level=O3): 8.17s
+- Wasm (opt-level=S): 25.65s
+- Wasm (opt-level=O3): 26.08s
 
-Note: Both Rust and Wasm programs read data in 2^24 byte chunks from the file
+_Note: Both Rust and Wasm programs read data in 2^24 byte chunks from the file to make both of them comparable_
 
