@@ -1,0 +1,25 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
+sha2 = "0.10"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "component:app"
+
+# Note: Do not confuse this option with `package.metadata.component.dependencies`!
+[package.metadata.component.target.dependencies]
+"myinterface:myinterface" = { path = "../interface/world.wit" }

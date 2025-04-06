@@ -1,0 +1,15 @@
+package myinterface:myinterface;
+
+interface types {
+  resource memory-reader {
+    read-byte: func() -> result<u8>;
+    read-max-n-bytes: func(n: u32) -> result<list<u8>>;
+  }
+}
+
+world common-world {
+  use types.{memory-reader};
+
+  export calculate-sha256: func(r: borrow<memory-reader>) -> string;
+}
+

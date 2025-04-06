@@ -1,0 +1,4 @@
+.direnv/
+target/
+
+**dummy-data.bin
